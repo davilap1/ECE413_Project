@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Authentication Example - Account</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="javascripts/changePass.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <a href="home.html" class="left brand-logo valign-wrapper">Home</a>
+      <br/>
+      <h1>Change Password</h1>
+      <br/>
+
+      <h3>Current password</h3>
+      
+      <div>
+        <label for="currentPass">Current Password: </label>
+        <input type="text" id="currentPass" placeholder="Current Password" name="ecurrentPass">
+      </div>
+
+      <h3>New Password</h3>
+
+      <div>
+        <label for="newPassword">Password: </label>
+        <input type="text" id="newPassword" placeholder="New Password" name="newPassword">
+      </div>
+
+      <div>
+        <label for="confirmPassword">Confirm Password: </label>
+        <input type="text" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
+      </div>
+
+      <div>
+        <button id = "btnChangePassword">Change Password</button>
+        <button id = "btnCancel">Cancel</button>
+      </div>
+
+    </div>
+
+
+    <script>
+      (function () {
+        if (!window.localStorage.getItem("token")) {
+          window.location.replace("display.html");
+        }
+      });
+    </script>
+  </body>
+</html>
