@@ -28,7 +28,8 @@ router.post("/signUp", function (req, res) {
            const passwordHash = bcrypt.hashSync(req.body.password, 10);
            const newCustomer = new Customer({
                email: req.body.email,
-               passwordHash: passwordHash
+               passwordHash: passwordHash,
+               device:  req.body.device
            });
 
            newCustomer.save(function (err, customer) {
@@ -162,12 +163,13 @@ router.get("/status", function (req, res) {
    try {
        const decoded = jwt.decode(token, secret);
        // Send back email and last access
-       Customer.find({ email: decoded.email }, "email lastAccess", function (err, users) {
+       Customer.find({ email: decoded.email }, "email lastAccess device", function (err, users) {
            if (err) {
                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
            }
            else {
                res.status(200).json(users);
+               console.log(users);
            }
        });
    }
