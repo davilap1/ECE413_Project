@@ -20,8 +20,13 @@
                 <option>No Devices</option>
             </select>
             <br>
-            <button id = "btnAdd">Add Device</button>
-            <button id = "btnRemove">Remove Device</button>
+            <!-- <button id="btnAdd">Add Device</button> -->
+            <button id="btnRemove">Remove Device</button>
+        </form>
+        <form id="userInputForm">
+            <label for="deviceName">Enter device name:</label>
+            <input type="text" id="deviceName" name="deviceName">
+            <button type="button" onclick="submitForm()">Add Device</button>
         </form>
     </div>
 

@@ -1,7 +1,22 @@
-function addDevice () {
-    const deviceName = prompt('Enter the device name:');
-    console.log("ADD");
-}
+// function addDevice() {
+//     try {
+//         const deviceName = prompt('Enter the device name:');
+//         window.alert(deviceName);
+//         // Check if the entered deviceName is not empty
+//         $('#deviceList').append('<option>hello</option>')
+//         if (deviceName !== null && deviceName.trim() !== '') {
+//             $('#deviceList').append('<option>' + deviceName + '</option>')
+//             //     $('<option>', {
+//             //     value: deviceName,
+//             //     text: deviceName
+//             // }));
+//         } else {
+//             console.log("Invalid or empty device name entered.");
+//         }
+//     } catch (error) {
+//         console.error("An error occurred:", error);
+//     }
+// }
 
 function removeDevice () {
     console.log("REMOVE");
@@ -34,3 +49,23 @@ $(function () {
         window.location.replace("display.html");
     });
 });
+
+function submitForm() {
+    const deviceName = document.getElementById('deviceName').value.trim();
+    console.log('User input:', deviceName);
+
+    // Check if the input is not empty and not already in the deviceList
+    if (deviceName !== '' && !isDeviceInList(deviceName)) {
+        $('#deviceList').append('<option>' + deviceName + '</option>');
+        window.alert('Device successfully added.');
+    } else {
+        window.alert('Invalid or duplicate device name.');
+    }
+}
+
+// Function to check if the deviceName is already in the deviceList
+function isDeviceInList(deviceName) {
+    return $('#deviceList option').filter(function () {
+        return this.value === deviceName;
+    }).length > 0;
+}
