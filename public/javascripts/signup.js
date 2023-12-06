@@ -48,6 +48,7 @@ function signup() {
         email: $('#email').val(),
         password: $('#password').val(),
         deviceName: $('#deviceName').val()
+        
     };
 
     $.ajax({
