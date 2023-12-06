@@ -1,5 +1,4 @@
 function changePassword() {
-    console.log("WHY!!!!?????");
     if ($("#newPassword").val() != $("#confirmPassword").val()) {
         window.alert("New password does NOT match!!");
         return;
@@ -56,6 +55,9 @@ function changePassword() {
     .fail(function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status == 404) {
             $('#rxData').html("Server could not be reached!!!");    
+        }
+        else if (jqXHR.status == 401) {
+            window.alert("Incorrect Account Password.");
         }
         else $('#rxData').html(JSON.stringify(jqXHR, null, 2));
     });

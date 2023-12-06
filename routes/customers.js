@@ -130,7 +130,7 @@ router.post("/changePassword", function (req, res) {
                     }
                     else {
                         console.log("PLEASE");
-                        window.alert("Incorrect Account Password.")
+                        // window.alert("Incorrect Account Password.");
                         res.status(401).json({ success: false, msg: "Incorrect Account Password." });
                     }
                 }
