@@ -14,7 +14,7 @@
     <div class="container">
         <a href="index.html" class="brand-logo">Home</a>
         <h1>Edit Devices</h1>
-        <form>
+        <form method = "POST">
             <label for="deviceList">User Devices:</label>
             <select id="deviceList">
                 <option>No Devices</option>
@@ -25,12 +25,12 @@
         </form>
     </div>
 
-    <!-- <script>
+    <script>
         (function () {
             if (!window.localStorage.getItem("token")) {
                 window.location.replace("display.html");
             }
         });
-    </script> -->
+    </script>
 </body>
 </html>

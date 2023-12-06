@@ -29,9 +29,10 @@ router.post("/signUp", function (req, res) {
            console.log(req.body);
            const newCustomer = new Customer({
                email: req.body.email,
-               passwordHash: passwordHash,
-               device:  req.body.deviceName
+               passwordHash: passwordHash
            });
+
+           newCustomer.device.push(req.body.deviceName);
 
            newCustomer.save(function (err, customer) {
                if (err) {
@@ -179,7 +180,7 @@ router.get("/status", function (req, res) {
    }
 });
 
-router.get("/editDevice", function (req, res) {
+router.get("/addDevice", function (req, res) {
     // See if the X-Auth header is set
     if (!req.headers["x-auth"]) {
         return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
@@ -187,14 +188,16 @@ router.get("/editDevice", function (req, res) {
 
     // X-Auth should contain the token 
     const token = req.headers["x-auth"];
+    console.log(req.body.deviceName);
     try {
         const decoded = jwt.decode(token, secret);
-        // Send back email and last access
-        Customer.find({ email: decoded.email }, "email lastAccess device", function (err, users) {
+
+        Customer.updateOne({ email: decoded.email }, { $addToSet: { device: req.body.deviceName } }, function (err, users) {
             if (err) {
                 res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
             }
             else {
+                console.log("poopy")
                 res.status(200).json(users);
                 console.log(users);
             }
