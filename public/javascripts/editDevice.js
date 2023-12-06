@@ -19,11 +19,24 @@
 // }
 
 function removeDevice () {
-    console.log("REMOVE");
+    // Check if there is more than one option in the dropdown
+    if ($('#deviceList option').length > 1) {
+        // Check if an option is selected
+        const selectedDevice = $('#deviceList').val();
+        if (selectedDevice) {
+            // Remove the selected option
+            $('#deviceList option:selected').remove();
+            window.alert('Selected device removed: ' + selectedDevice);
+        } else {
+            window.alert('No device selected.');
+        }
+    } else {
+        window.alert('Only one device is present. Cannot remove.');
+    }
 }
 
 $(function () {
-    $('#btnAdd').click(addDevice);
+    //$('#btnAdd').click(addDevice);
     $('#btnRemove').click(removeDevice);
 
     $.ajax({
