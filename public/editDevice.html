@@ -19,8 +19,8 @@
                 <option>No Devices</option>
             </select>
             <br>
-            <button type="button">Add Device</button>
-            <button type="button">Remove Device</button>
+            <button id = "btnAdd">Add Device</button>
+            <button type="btnRemove">Remove Device</button>
         </form>
     </div>
 
@@ -29,7 +29,7 @@
             if (!window.localStorage.getItem("token")) {
                 window.location.replace("display.html");
             }
-        })();
+        });
     </script> -->
 </body>
 </html>
