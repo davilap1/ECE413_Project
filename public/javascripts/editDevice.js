@@ -12,14 +12,23 @@ $(function () {
     $('#btnRemove').click(removeDevice);
 
     $.ajax({
-        url: '/customers/status',
+        url: '/customers/editDevice',
         method: 'GET',
         headers: { 'x-auth' : window.localStorage.getItem("token") },
         dataType: 'json'
     })
     .done(function (data, textStatus, jqXHR) {
-        console.log("Work please!");
-        console.log(JSON.stringify(data, null, 2));
+        if (Array.isArray(data) && data.length > 0 && data[0].device) {
+            const deviceName = data[0].device;
+
+            // Append the extracted deviceName to the <select> element
+            $('#deviceList').append($('<option>', {
+                value: deviceName,
+                text: deviceName
+            }));
+        } else {
+            console.error("Invalid data format or missing 'device' property.");
+        }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");
