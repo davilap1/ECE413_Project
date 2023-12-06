@@ -2,6 +2,7 @@
 $(function (){
     $('#btnLogOut').click(logout);
     $('#btnChangePassword').click(changePasswordPage);
+    $('#btnDevices').click(editDevices);
 
     $.ajax({
         url: '/customers/status',
@@ -26,4 +27,8 @@ function logout() {
 
 function changePasswordPage() {
     window.location.replace("changePass.html");
+}
+
+function editDevices() {
+    window.location.replace("editDevice.html");
 }
