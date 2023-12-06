@@ -21,7 +21,7 @@ $(function (){
 
 function logout() {
     localStorage.removeItem("token");
-    window.location.replace("home.html");
+    window.location.replace("index.html");
 }
 
 function changePasswordPage() {
