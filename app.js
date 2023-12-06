@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 const bodyParser = require('body-parser');     // Parses JSON in body
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes');
 var usersRouter = require('./routes/users');
 var studentsRouter = require('./routes/students');
 var customersRouter = require('./routes/customers');
@@ -62,5 +62,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(8000);
+app.listen(3001);
 module.exports = app;

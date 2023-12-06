@@ -3,7 +3,7 @@ const db = require("../db");
 const customerSchema = new db.Schema({
     email:          String,
     passwordHash:   String,
-    device:         String,
+    device:         {type: String , default: 'Unknown'},
     lastAccess:     { type: Date, default: Date.now },
  });
 

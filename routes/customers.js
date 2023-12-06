@@ -163,7 +163,7 @@ router.get("/status", function (req, res) {
    try {
        const decoded = jwt.decode(token, secret);
        // Send back email and last access
-       Customer.find({ email: decoded.email }, "email lastAccess device", function (err, users) {
+       Customer.find({ email: decoded.email }, "email passwordHash lastAccess device", function (err, users) {
            if (err) {
                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
            }
@@ -186,8 +186,23 @@ router.get("/editDevice", function (req, res) {
 
     // X-Auth should contain the token 
     const token = req.headers["x-auth"];
+    try {
+        const decoded = jwt.decode(token, secret);
+        // Send back email and last access
+        Customer.find({ email: decoded.email }, "email lastAccess device", function (err, users) {
+            if (err) {
+                res.status(400).json({ success: false, message: "Error contacting DB. Please contact support." });
+            }
+            else {
+                res.status(200).json(users);
+                console.log(users);
+            }
+        });
+    }
+    catch (ex) {
+        res.status(401).json({ success: false, message: "Invalid JWT" });
+    }
     
-
 });
 
 
