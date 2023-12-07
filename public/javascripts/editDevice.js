@@ -46,18 +46,23 @@ $(function () {
         dataType: 'json'
     })
     .done(function (data, textStatus, jqXHR) {
-        if (Array.isArray(data) && data.length > 0 && data[0].device) {
-            const deviceName = data[0].device;
-
-            // Append the extracted deviceName to the <select> element
-            $('#deviceList').append($('<option>', {
-                value: deviceName,
-                text: deviceName
-            }));
+        if (Array.isArray(data) && data.length > 0) {
+            // Iterate over each element in the array
+            data.forEach(function (item) {
+                if (item.device) {
+                    const deviceName = item.device;
+                    deviceName.forEach(function (devName){
+                        $('#deviceList').append('<option>' + devName + '</option>');
+                    });
+                    // Append the extracted deviceName to the <select> element
+                } else {
+                    console.error("Invalid data format or missing 'device' property for an item.");
+                }
+            });
         } else {
-            console.error("Invalid data format or missing 'device' property.");
+            console.error("Invalid data format or empty array.");
         }
-    })
+    })    
     .fail(function (jqXHR, textStatus, errorThrown) {
         window.location.replace("display.html");
     });
@@ -70,7 +75,30 @@ function submitForm() {
     // Check if the input is not empty and not already in the deviceList
     if (deviceName !== '' && !isDeviceInList(deviceName)) {
         $('#deviceList').append('<option>' + deviceName + '</option>');
-        window.alert('Device successfully added.');
+        var data3 = {
+            newDevice: deviceName
+        }
+    
+        $.ajax({
+            type: "POST",
+            url: '/customers/addDevice',
+            headers: { 'x-auth': window.localStorage.getItem("token")},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data3),
+        })
+        .done(function (data, textStatus, jqXHR) {
+            window.alert('Device successfully added.');
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 404) {
+                window.alert("Server could not be reached!!!");    
+            }
+            else if (jqXHR.status == 401) {
+                window.alert("Token Issue");
+            }
+            else window.alert("Something bad happened");
+        });
     } else {
         window.alert('Invalid or duplicate device name.');
     }
