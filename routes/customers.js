@@ -29,9 +29,10 @@ router.post("/signUp", function (req, res) {
            console.log(req.body);
            const newCustomer = new Customer({
                email: req.body.email,
-               passwordHash: passwordHash,
-               device:  req.body.deviceName
+               passwordHash: passwordHash
            });
+
+           newCustomer.device.push(req.body.deviceName);
 
            newCustomer.save(function (err, customer) {
                if (err) {
