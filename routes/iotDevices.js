@@ -11,4 +11,9 @@ const fs = require('fs');
 router.post("/data", function (req, res){
     console.log(req);
     console.log(req.body);
+    if (res = error) {
+        res.status(400);
+    } else {
+        res.status(201);
+    }
 });
