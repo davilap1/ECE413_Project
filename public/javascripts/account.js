@@ -3,6 +3,7 @@ $(function (){
     $('#btnLogOut').click(logout);
     $('#btnChangePassword').click(changePasswordPage);
     $('#btnDevices').click(editDevices);
+    $('#btnViewGraphs').click(viewGraphs);
     // Shows the user info (email, last access, devices, and ID) in the text area.
     $.ajax({
         url: '/customers/status',
@@ -32,4 +33,9 @@ function changePasswordPage() {
 // Moves to the Edit Devices screen
 function editDevices() {
     window.location.replace("editDevice.html");
+}
+
+// Moves to the Graphs screen
+function viewGraphs() {
+    window.location.replace("graphs.html");
 }
