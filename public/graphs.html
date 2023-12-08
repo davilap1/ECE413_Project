@@ -28,12 +28,20 @@
   // Sample data for the line graph
   const lineGraphData = {
     labels: dataForLineGraph.labels,  // Assuming labels are defined in data.js
-    datasets: [{
-      label: 'Random Data',
-      data: dataForLineGraph.data,  // Assuming dataForLineGraph.data is defined in data.js
+  datasets: [
+    {
+      label: 'HR',
+      data: dataForLineGraph.dataLine1,  // Assuming dataLine1 is defined in data.js
       borderColor: 'blue',
       fill: false,
-    }]
+    },
+    {
+      label: 'sp02',
+      data: dataForLineGraph.dataLine2,  // Assuming dataLine2 is defined in data.js
+      borderColor: 'green',
+      fill: false,
+    }
+  ]
   };
 
   // Get the canvas elements
@@ -49,6 +57,12 @@
         y: {
           beginAtZero: true
         }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Weekly Summary View',
+        }
       }
     }
   });
@@ -60,7 +74,14 @@
     options: {
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: false,
+          suggestedMin: 0,
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Detailed Daily View',
         }
       }
     }
