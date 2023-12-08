@@ -261,4 +261,62 @@ router.post("/addDevice", function (req, res) {
     }
 });
 
+router.post("/removeDevice", function (req, res) {
+    if (!req.headers["x-auth"]) {
+        return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
+    }
+
+    // X-Auth should contain the token
+    const token = req.headers["x-auth"];
+    // Decode the token (does not verify the signature)
+    const decodedToken = jwt.decode(token, secret);
+
+    // Implement your verification logic based on the decoded payload
+    if (decodedToken) {
+        // Check expiration if 'exp' claim exists
+        if (decodedToken.exp && decodedToken.exp < Date.now() / 1000) {
+            console.log('Token has expired');
+            console.log(decodedToken);
+        } else {
+            console.log('Token is valid');
+            console.log(decodedToken); // Decoded payload (contains claims)
+
+            // You can perform additional verification based on your requirements
+            try {
+                Customer.findOne({ email: decodedToken["email"] }, function (err, customer) {
+                    if (err) {
+                        res.status(400).send(err);
+                    } else if (!customer) {
+                        // Password not in the database
+                        res.status(401).json({ error: "Login failure!!" });
+                    } else {
+                        const deviceToRemove = req.body.deviceToRemove;
+                        console.log(customer.device.indexOf(deviceToRemove))
+                        // Remove the specified device from the array
+                        const indexToRemove = customer.device.indexOf(deviceToRemove);
+                        if (indexToRemove !== -1) {
+                            customer.device.splice(indexToRemove, 1);
+                            customer.save((err, updatedcustomer) => {
+                                if (err) {
+                                    res.status(500).json({ success: false, error: "Error removing device" });
+                                } else {
+                                    console.log("User's Devices have been updated.");
+                                    res.status(200).json({ success: true, msg: "Device removed successfully!" });
+                                }
+                            });
+                        } else {
+                            res.status(404).json({ success: false, msg: "Device not found in user's devices" });
+                        }
+                    }
+                });
+            } catch (ex) {
+                res.status(401).json({ success: false, message: "Invalid JWT" });
+            }
+        }
+    } else {
+        console.log('Token decoding failed');
+    }
+});
+
+
 module.exports = router;

@@ -1,40 +1,3 @@
-// function addDevice() {
-//     try {
-//         const deviceName = prompt('Enter the device name:');
-//         window.alert(deviceName);
-//         // Check if the entered deviceName is not empty
-//         $('#deviceList').append('<option>hello</option>')
-//         if (deviceName !== null && deviceName.trim() !== '') {
-//             $('#deviceList').append('<option>' + deviceName + '</option>')
-//             //     $('<option>', {
-//             //     value: deviceName,
-//             //     text: deviceName
-//             // }));
-//         } else {
-//             console.log("Invalid or empty device name entered.");
-//         }
-//     } catch (error) {
-//         console.error("An error occurred:", error);
-//     }
-// }
-
-function removeDevice () {
-    // Check if there is more than one option in the dropdown
-    if ($('#deviceList option').length > 1) {
-        // Check if an option is selected
-        const selectedDevice = $('#deviceList').val();
-        if (selectedDevice) {
-            // Remove the selected option
-            $('#deviceList option:selected').remove();
-            window.alert('Selected device removed: ' + selectedDevice);
-        } else {
-            window.alert('No device selected.');
-        }
-    } else {
-        window.alert('Only one device is present. Cannot remove.');
-    }
-}
-
 $(function () {
     //$('#btnAdd').click(addDevice);
     $('#btnRemove').click(removeDevice);
@@ -109,4 +72,40 @@ function isDeviceInList(deviceName) {
     return $('#deviceList option').filter(function () {
         return this.value === deviceName;
     }).length > 0;
+}
+
+function removeDevice () {
+    // Check if there is more than one option in the dropdown
+    if ($('#deviceList option').length > 1) {
+        // Check if an option is selected
+        const selectedDevice = $('#deviceList').val();
+        if (selectedDevice) {
+            // Remove the selected option
+            $('#deviceList option:selected').remove();
+            $.ajax({
+                type: "POST",
+                url: '/customers/removeDevice',
+                headers: { 'x-auth': window.localStorage.getItem("token")},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({deviceToRemove: selectedDevice}),
+            })
+            .done(function (data, textStatus, jqXHR) {
+                window.alert('Device successfully removed.');
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 404) {
+                    window.alert("Server could not be reached!!!");    
+                }
+                else if (jqXHR.status == 401) {
+                    window.alert("Token Issue");
+                }
+                else window.alert("Something bad happened");
+            });
+        } else {
+            window.alert('No device selected.');
+        }
+    } else {
+        window.alert('Only one device is present. Cannot remove.');
+    }
 }
