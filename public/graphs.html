@@ -1,73 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Authentication Example - Graphs</title>
-    <!--Import Google Icon Font-->
-    <meta charset="UTF-8">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style>
-            .fa-anchor, .fa-coffee {
-                font-size: 200px
-            }
-            
-        </style>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript">
-    </script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphs</title>
+  <!-- Include Chart.js library -->
+  <script src="javascripts/data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
 </head>
-
-
 <body>
-    <div class="container">
-        <a href="index.html" class="left brand-logo valign-wrapper">Home</a>
-        <a href="account.html" class="left brand-logo valign-wrapper">Return</a>
-        <br/>
-        <h1>Token-based User authenticiation example - Graphs</h1>
-        <br/>
-    </div>
-    <div class="w3-row-padding w3-padding-64 w3-container" style="text-align:center; height: 100vh;">
-        <div>
-            <div style="margin: auto; width: 100vw;">
-                <h1>Weekly Summary View</h1>
-                <canvas id="barChart"></canvas>
-            </div>
-        </div>
-        <div>
-            <div style="margin: auto; width: 100vw;">
-                <h1>Detailed Daily View</h1>
-                <canvas id="lineChart"></canvas>
-            </div>
-        </div>
-    </div>
+  <!-- Create canvas elements for the graphs -->
+  <canvas id="barGraph" width="400" height="200"></canvas>
+  <canvas id="lineGraph" width="400" height="200"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" type="text/javascript"></script>
-    <script src="../javascripts/data.js" type="text/javascript"></script>
+  <script>
+    // Sample data for the bar graph
+  const barGraphData = {
+    labels: ["HR mean", "spO2 mean", "HR min", "spO2 min", "HR max", "spO2 max"],
+    datasets: [{
+      label: 'Values',
+      data: dataForBarGraph,  // Assuming dataForBarGraph is defined in data.js
+      backgroundColor: ['red', 'blue', 'orange', 'purple', 'green', 'cyan'],
+    }]
+  };
 
-    <script>
-        function toggleNavbar() {
-            var x = document.getElementById("Nav");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
+  // Sample data for the line graph
+  const lineGraphData = {
+    labels: dataForLineGraph.labels,  // Assuming labels are defined in data.js
+    datasets: [{
+      label: 'Random Data',
+      data: dataForLineGraph.data,  // Assuming dataForLineGraph.data is defined in data.js
+      borderColor: 'blue',
+      fill: false,
+    }]
+  };
+
+  // Get the canvas elements
+  const barGraphCanvas = document.getElementById('barGraph').getContext('2d');
+  const lineGraphCanvas = document.getElementById('lineGraph').getContext('2d');
+
+  // Create the bar graph
+  new Chart(barGraphCanvas, {
+    type: 'bar',
+    data: barGraphData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
-    </script>
+      }
+    }
+  });
 
+  // Create the line graph
+  new Chart(lineGraphCanvas, {
+    type: 'line',
+    data: lineGraphData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  </script>
 </body>
-
 </html>
