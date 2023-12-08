@@ -1,5 +1,4 @@
 $(function () {
-    //$('#btnAdd').click(addDevice);
     $('#btnRemove').click(removeDevice);
 
     $.ajax({

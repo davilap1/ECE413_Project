@@ -1,4 +1,6 @@
 // public/javasciprts/webstorage.js
+
+// Currently not used but too afraid to remove it from the code.
 function saveSessionStorage() {
     // data validation
     if ($('#name').val() === "") {

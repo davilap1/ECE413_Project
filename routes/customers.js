@@ -12,12 +12,6 @@ const secret = fs.readFileSync(__dirname + '/../keys/jwtkey').toString();
 
 // example of authentication
 // register a new customer
-
-// please fiil in the blanks
-// see javascript/signup.js for ajax call
-// see Figure 9.3.5: Node.js project uses token-based authentication and password hashing with bcryptjs
-// in https://learn.zybooks.com/zybook/ARIZONAECE413SalehiFall2022/chapter/9/section/3
-
 router.post("/signUp", function (req, res) {
    Customer.findOne({ email: req.body.email }, function (err, customer) {
        if (err) res.status(401).json({ success: false, err: err });
@@ -48,12 +42,7 @@ router.post("/signUp", function (req, res) {
    });
 });
 
-
-// please fill in the blanks
-// see javascript/login.js for ajax call
-// see Figure 9.3.5: Node.js project uses token-based authentication and password hashing with bcryptjs
-// in https://learn.zybooks.com/zybook/ARIZONAECE413SalehiFall2022/chapter/9/section/3
-
+// Allow Cutomer to login in to their account.
 router.post("/logIn", function (req, res) {
    if (!req.body.email || !req.body.password) {
        res.status(401).json({ error: "Missing email and/or password" });
@@ -86,6 +75,7 @@ router.post("/logIn", function (req, res) {
    });
 });
 
+// Endpoint that handles the changing of a password
 router.post("/changePassword", function (req, res) {
     if (!req.headers["x-auth"]) {
         return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
@@ -105,9 +95,6 @@ router.post("/changePassword", function (req, res) {
         } else {
             console.log('Token is valid');
             console.log(decodedToken); // Decoded payload (contains claims)
-
-
-        // You can perform additional verification based on your requirements
             try {
                 // const decoded = jwt.verify(token, secret);
                 Customer.findOne({ email: decodedToken["email"] }, function (err, customer) {
@@ -148,12 +135,7 @@ router.post("/changePassword", function (req, res) {
     }
 });
 
-
-// please fiil in the blanks
-// see javascript/account.js for ajax call
-// see Figure 9.3.5: Node.js project uses token-based authentication and password hashing with bcryptjs
-// in https://learn.zybooks.com/zybook/ARIZONAECE413SalehiFall2022/chapter/9/section/3
-
+// Endpoint to show the user thier information, including their devices, email, and last access time.
 router.get("/status", function (req, res) {
    // See if the X-Auth header is set
    if (!req.headers["x-auth"]) {
@@ -180,6 +162,7 @@ router.get("/status", function (req, res) {
    }
 });
 
+// Fills drop down menu with the current user devices. 
 router.get("/editDevice", function (req, res) {
     // See if the X-Auth header is set
     if (!req.headers["x-auth"]) {
@@ -207,6 +190,7 @@ router.get("/editDevice", function (req, res) {
     
 });
 
+// Handles adding devices to the users account. 
 router.post("/addDevice", function (req, res) {
     if (!req.headers["x-auth"]) {
         return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
@@ -217,7 +201,7 @@ router.post("/addDevice", function (req, res) {
     // Decode the token (does not verify the signature)
     const decodedToken = jwt.decode(token, secret);
 
-    // Implement your verification logic based on the decoded payload
+    // Verification Logic
     if (decodedToken) {
         // Check expiration if 'exp' claim exists
         if (decodedToken.exp && decodedToken.exp < Date.now() / 1000) {
@@ -226,8 +210,6 @@ router.post("/addDevice", function (req, res) {
         } else {
             console.log('Token is valid');
             console.log(decodedToken); // Decoded payload (contains claims)
-
-            // You can perform additional verification based on your requirements
             try {
                 // const decoded = jwt.verify(token, secret);
                 Customer.findOne({ email: decodedToken["email"] }, function (err, customer) {
@@ -261,6 +243,7 @@ router.post("/addDevice", function (req, res) {
     }
 });
 
+// Handles removing devices from the users account. 
 router.post("/removeDevice", function (req, res) {
     if (!req.headers["x-auth"]) {
         return res.status(401).json({ success: false, msg: "Missing X-Auth header" });
@@ -280,8 +263,6 @@ router.post("/removeDevice", function (req, res) {
         } else {
             console.log('Token is valid');
             console.log(decodedToken); // Decoded payload (contains claims)
-
-            // You can perform additional verification based on your requirements
             try {
                 Customer.findOne({ email: decodedToken["email"] }, function (err, customer) {
                     if (err) {

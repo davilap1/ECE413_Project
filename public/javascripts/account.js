@@ -3,7 +3,7 @@ $(function (){
     $('#btnLogOut').click(logout);
     $('#btnChangePassword').click(changePasswordPage);
     $('#btnDevices').click(editDevices);
-
+    // Shows the user info (email, last access, devices, and ID) in the text area.
     $.ajax({
         url: '/customers/status',
         method: 'GET',
@@ -18,17 +18,18 @@ $(function (){
     });
 });
 
-
-
+// Removes the token, effectively logs out the user
 function logout() {
     localStorage.removeItem("token");
     window.location.replace("index.html");
 }
 
+// Moves to the changePass screen
 function changePasswordPage() {
     window.location.replace("changePass.html");
 }
 
+// Moves to the Edit Devices screen
 function editDevices() {
     window.location.replace("editDevice.html");
 }

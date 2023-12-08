@@ -1,4 +1,6 @@
 function changePassword() {
+    // This marks the beginning of the strong password implimintation. 
+    // Used same requirments when changing password as when creating a password. 
     if ($("#newPassword").val() != $("#confirmPassword").val()) {
         window.alert("New password does NOT match!!");
         return;
@@ -40,7 +42,7 @@ function changePassword() {
         oldPassword: $('#currentPass').val(),
         newPassword: $('#newPassword').val()
     }
-
+    
     $.ajax({
         type: "POST",
         url: '/customers/changePassword',

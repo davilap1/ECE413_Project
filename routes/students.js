@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Student = require("../models/student");
-
+// Students is not used anymore but we are too afraid to remove it from the code.
 // CRUD implementation
 router.post("/create", function(req, res){
    const newStudent = new Student({

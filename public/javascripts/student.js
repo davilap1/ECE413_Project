@@ -1,4 +1,5 @@
 // public/javasciprts/student.js
+// Not used in current iteration but we are too afraid to remove it
 function createStudent() {
     // data validation
     if ($('#name').val() === "") {

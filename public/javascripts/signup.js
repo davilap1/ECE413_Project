@@ -2,6 +2,8 @@
 
 function signup() {
     // data validation
+    // Used same requirments shown in lab 3.
+    // The large areas of commented out code were not deleted in case we wanted to go back and add the error messages in the page instead of a window alert.
     let re1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
     if ($('#email').val() === "" || !(re1.test($('#email').val()))) {
         window.alert("invalid email!");
@@ -48,9 +50,9 @@ function signup() {
         email: $('#email').val(),
         password: $('#password').val(),
         deviceName: $('#deviceName').val()
-        
-    };
 
+    };
+    //ajax call to save the information
     $.ajax({
         url: '/customers/signUp',
         method: 'POST',
