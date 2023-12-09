@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="stylesheets/site.css" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit IOT Device</title>
+
+</head>
+<body>
+    <a href="index.html" class="brand-logo">Home</a>
+        <h1>Edit Particle Device</h1>
+        <form id="userInputForm">
+            <!-- Frequency input -->
+            <label for="frequency">Frequency:</label>
+            <input type="number" id="frequency" name="frequency" min="1" required>
+            <span>Minutes</span>
+        
+            <br>
+        
+            <!-- Time of day range input -->
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required>
+        
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required>
+        
+            <br>
+        
+            <!-- Submit button -->
+            <button type="button" onclick="submitForm()">Submit</button>
+          </form>
+        
+</body>
+</html> 
